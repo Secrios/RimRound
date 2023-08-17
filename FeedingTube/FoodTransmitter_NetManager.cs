@@ -98,11 +98,13 @@ namespace RimRound.FeedingTube
 
         public void Init(FoodTransmitter_ThingComp comp = null) 
         {
+            var buildings = this.map.listerBuildings;
+            
             IEnumerable<FoodTransmitter_ThingComp> FT_TCComps =
                 from buildingWithComp
                 in 
                 (from building
-                in this.map.listerBuildings.allBuildingsColonist
+                in buildings.allBuildingsColonist.Concat(buildings.allBuildingsNonColonist)
                 where building.TryGetComp<FoodTransmitter_ThingComp>() is FoodTransmitter_ThingComp
                 select building)
                 select buildingWithComp.TryGetComp<FoodTransmitter_ThingComp>()

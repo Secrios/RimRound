@@ -75,6 +75,7 @@ namespace RimRound.FeedingTube.Comps
             yield return new Command_Action
             {
                 defaultLabel = "Purge Contents",
+                disabled = parent.Faction != Faction.OfPlayer,
                 action = delegate ()
                 {
                     this.Stored = 0;

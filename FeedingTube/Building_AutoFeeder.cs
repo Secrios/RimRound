@@ -17,8 +17,12 @@ namespace RimRound.FeedingTube
     public class Building_AutoFeeder : Building
     {
         int tickCheckInterval = 200;
-        AutoFeederMode currentMode = AutoFeederMode.off;
+        public AutoFeederMode CurrentMode = AutoFeederMode.off;
         Pawn _currentPawn;
+
+        private bool? isPlayerFaction;
+        public bool AllowActions => (isPlayerFaction ??= Faction == Faction.OfPlayer);
+        
         public Pawn CurrentPawn 
         {
             get 
@@ -70,7 +74,7 @@ namespace RimRound.FeedingTube
         {
             base.ExposeData();
             Scribe_TargetInfo.Look(ref forcedTarget, "autofeederForcedTarget");
-            Scribe_Values.Look<AutoFeederMode>(ref currentMode, "CurrentAutoFeederMode", AutoFeederMode.off);
+            Scribe_Values.Look<AutoFeederMode>(ref CurrentMode, "CurrentAutoFeederMode", AutoFeederMode.off);
         }
 
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
@@ -85,7 +89,7 @@ namespace RimRound.FeedingTube
             if (GeneralUtility.IsHashIntervalTick(tickCheckInterval) && CurrentPawn != null)
             {
                 float currentNutritionPercent = CurrentPawn.needs.food.CurLevelPercentage;
-                switch (currentMode)
+                switch (CurrentMode)
                 {
                     case AutoFeederMode.off:
                         break;
@@ -140,10 +144,8 @@ namespace RimRound.FeedingTube
 
         public override IEnumerable<Gizmo> GetGizmos()
         {
-            foreach (Gizmo gizmo in base.GetGizmos())
-            { 
+            foreach (var gizmo in base.GetGizmos())
                 yield return gizmo;
-            }
 
             if (forcedTarget == LocalTargetInfo.Invalid)
                 yield return GetStartActionGizmo();
@@ -253,9 +255,12 @@ namespace RimRound.FeedingTube
 
         Command_Action GetModeSwitchGizmo() 
         {
-            Command_Action command_Action = new();
+            Command_Action command_Action = new()
+            {
+                disabled = !AllowActions
+            };
 
-            switch (currentMode) 
+            switch (CurrentMode) 
             {
                 case AutoFeederMode.off:
                     command_Action.defaultLabel = "FeedingTubeModeLabel_off".Translate();
@@ -263,7 +268,7 @@ namespace RimRound.FeedingTube
                     command_Action.icon = offIcon;
                     command_Action.action = delegate ()
                     {
-                        currentMode = AutoFeederMode.lose;
+                        CurrentMode = AutoFeederMode.lose;
                         SoundDefOf.Tick_Low.PlayOneShotOnCamera(null);
                     };
 
@@ -275,7 +280,7 @@ namespace RimRound.FeedingTube
                     command_Action.icon = loseIcon;
                     command_Action.action = delegate ()
                     {
-                        currentMode = AutoFeederMode.maintain;
+                        CurrentMode = AutoFeederMode.maintain;
                         SoundDefOf.Tick_Low.PlayOneShotOnCamera(null);
                     };
 
@@ -286,7 +291,7 @@ namespace RimRound.FeedingTube
                     command_Action.icon = maintainIcon;
                     command_Action.action = delegate ()
                     {
-                        currentMode = AutoFeederMode.gain;
+                        CurrentMode = AutoFeederMode.gain;
                         SoundDefOf.Tick_Low.PlayOneShotOnCamera(null);
                     };
 
@@ -297,7 +302,7 @@ namespace RimRound.FeedingTube
                     command_Action.icon = gainIcon;
                     command_Action.action = delegate ()
                     {
-                        currentMode = AutoFeederMode.maxgain;
+                        CurrentMode = AutoFeederMode.maxgain;
                         SoundDefOf.Tick_Low.PlayOneShotOnCamera(null);
                     };
 
@@ -308,7 +313,7 @@ namespace RimRound.FeedingTube
                     command_Action.icon = forceGainIcon;
                     command_Action.action = delegate ()
                     {
-                        currentMode = AutoFeederMode.off;
+                        CurrentMode = AutoFeederMode.off;
                         SoundDefOf.Tick_Low.PlayOneShotOnCamera(null);
                     };
 
@@ -320,14 +325,17 @@ namespace RimRound.FeedingTube
 
         Command_Action GetStartActionGizmo() 
         {
-            Command_Action command_Action = new();
-            command_Action.defaultLabel = "FeedingTube_TargetPawn".Translate();
-            command_Action.defaultDesc = "FeedingTube_TargetPawnDesc".Translate();
-            command_Action.icon = ContentFinder<Texture2D>.Get("UI/Commands/Attack", true);
-            command_Action.action = delegate ()
+            Command_Action command_Action = new()
             {
-                this.BeginTargeting();
-                SoundDefOf.Tick_Low.PlayOneShotOnCamera(null);
+                disabled = !AllowActions,
+                defaultLabel = "FeedingTube_TargetPawn".Translate(),
+                defaultDesc = "FeedingTube_TargetPawnDesc".Translate(),
+                icon = ContentFinder<Texture2D>.Get("UI/Commands/Attack", true),
+                action = () =>
+                {
+                    this.BeginTargeting();
+                    SoundDefOf.Tick_Low.PlayOneShotOnCamera(null);
+                }
             };
 
             //command_VerbTarget.Disable("CannotFire".Translate() + ": " + "Roofed".Translate().CapitalizeFirst());
@@ -337,16 +345,19 @@ namespace RimRound.FeedingTube
 
         Command_Action GetStopActionGizmo() 
         {
-            Command_Action command_Action = new();
-            command_Action.defaultLabel = "FeedingTube_StopFeedingLabel".Translate();
-            command_Action.defaultDesc = "FeedingTube_StopFeedingDesc".Translate();
-            command_Action.icon = ContentFinder<Texture2D>.Get("UI/Commands/Halt", true);
-            command_Action.action = delegate ()
+            Command_Action command_Action = new()
             {
-                ResetForcedTarget();
-                currentMode = AutoFeederMode.off;
-                CachedFNDComp = null;
-                SoundDefOf.Tick_Low.PlayOneShotOnCamera(null);
+                disabled = !AllowActions,
+                defaultLabel = "FeedingTube_StopFeedingLabel".Translate(),
+                defaultDesc = "FeedingTube_StopFeedingDesc".Translate(),
+                icon = ContentFinder<Texture2D>.Get("UI/Commands/Halt", true),
+                action = delegate ()
+                {
+                    ResetForcedTarget();
+                    CurrentMode = AutoFeederMode.off;
+                    CachedFNDComp = null;
+                    SoundDefOf.Tick_Low.PlayOneShotOnCamera(null);
+                }
             };
 
             return command_Action;
@@ -371,11 +382,7 @@ namespace RimRound.FeedingTube
                             this.BeginTargeting();
                             return;
                         }
-                        this.CurrentPawn = t.Pawn;
-                        this.CachedFNDComp = t.Pawn.TryGetComp<FullnessAndDietStats_ThingComp>();
-                        Log.Message($"Targeted Pawn! {this.CurrentPawn.Name}");
-                        this.CurrentPawn.health.AddHediff(Defs.HediffDefOf.RimRound_UsingFeedingTube);
-                        forcedTarget = t;
+                        SetTarget(t);
                         SoundDefOf.Tick_High.PlayOneShotOnCamera(null);
 
                         return;
@@ -399,6 +406,15 @@ namespace RimRound.FeedingTube
                 null, // Action when finished
                 Defs.ThingDefOf.RR_FeedingTubeFluid.uiIcon, //Icon
                 false); //play sound on action
+        }
+
+        public void SetTarget(LocalTargetInfo t)
+        {
+            this.CurrentPawn = t.Pawn;
+            this.CachedFNDComp = t.Pawn.TryGetComp<FullnessAndDietStats_ThingComp>();
+            Log.Message($"Targeted Pawn! {this.CurrentPawn.Name}");
+            this.CurrentPawn.health.AddHediff(Defs.HediffDefOf.RimRound_UsingFeedingTube);
+            forcedTarget = t;
         }
 
         private TargetingParameters TargetingParams
