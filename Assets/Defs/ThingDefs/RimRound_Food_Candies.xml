@@ -1,0 +1,30 @@
+﻿<Defs>
+
+    <ThingDef ParentName="OrganicProductBase">
+        <defName>RimRound_CandyBerries</defName>
+        <label>candy berries</label>
+        <description>Candy that looks like berries. Yum!</description>
+        <possessionCount>10</possessionCount>
+        <graphicData>
+            <texPath>Things/Item/Resource/Harvested/Candy_Berries</texPath>
+        </graphicData>
+        <statBases>
+            <MarketValue>1.2</MarketValue>
+            <Mass>0.027</Mass>
+            <Nutrition>0.1</Nutrition>
+        </statBases>
+        <thingCategories>
+            <li>PlantFoodRaw</li>
+        </thingCategories>
+        <allowedArchonexusCount>200</allowedArchonexusCount>
+        <ingestible>
+            <ingestEffect>EatVegetarian</ingestEffect>
+            <ingestSound>RawVegetable_Eat</ingestSound>
+            <tasteThought></tasteThought>
+            <foodType>VegetableOrFruit</foodType>
+            <preferability>RawTasty</preferability>
+        </ingestible>
+        <socialPropernessMatters>true</socialPropernessMatters>
+    </ThingDef>
+    
+</Defs>

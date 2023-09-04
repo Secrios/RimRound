@@ -2,7 +2,7 @@
 
     <!-- Candy Soil -->
     <TerrainDef ParentName="NaturalTerrainBase">
-        <defName>RimRond_CandySoil</defName>
+        <defName>RimRound_CandySoil</defName>
         <label>candy soil</label>
         <texturePath>Terrain/Surfaces/CandySoil</texturePath>
         <pollutedTexturePath>Terrain/Surfaces/CandySoilPolluted</pollutedTexturePath> <!-- I don't know whether this is needed in the mod -->
@@ -14,7 +14,7 @@
             <BeautyOutdoors>0</BeautyOutdoors>
             <Cleanliness>-1</Cleanliness>
         </statBases>
-        <scatterType>Rocky</scatterType>
+        <scatterType>Rocky_Candy</scatterType>
         <affordances>
             <li>Light</li>
             <li>Medium</li>
@@ -39,6 +39,15 @@
             <li>Soil</li>
         </tags>
     </TerrainDef>
+    
+    <TerrainDef ParentName="TileStoneBase">
+        <defName>RimRound_RockCandyTile</defName>
+        <label>rock candy tile</label>
+        <color>(255,105,180)</color>
+        <costList>
+            <RimRound_RockCandyMaterial>4</RimRound_RockCandyMaterial>
+        </costList>
+    </TerrainDef>
 
     <!-- Chocolate Water -->
     <TerrainDef ParentName="WaterShallowBase">
@@ -49,6 +58,14 @@
         <waterDepthShader>Map/WaterDepth</waterDepthShader>
         <renderPrecedence>394</renderPrecedence>
         <driesTo>Gravel</driesTo>
+    </TerrainDef>
+
+    <TerrainDef ParentName="WaterDeepBase">
+        <defName>RimRound_ChocolateWater</defName>
+        <label>chocolate</label>
+        <texturePath>Terrain/Surfaces/ChocolateWater</texturePath>
+        <pollutedTexturePath>Terrain/Surfaces/WaterDeepRampPolluted</pollutedTexturePath> <!-- todo -->
+        <renderPrecedence>395</renderPrecedence>
     </TerrainDef>
 
 </Defs>

@@ -1,0 +1,9 @@
+﻿<Defs>
+
+    <ScatterableDef ParentName="StoneRoot">
+        <defName>CandyStoneDebrisA</defName>
+        <texturePath>Terrain/Scatter/CandyStoneDebrisA</texturePath>
+        <scatterType>Rocky_Candy</scatterType>
+    </ScatterableDef>
+    
+</Defs>

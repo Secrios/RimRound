@@ -1,16 +1,16 @@
 ﻿<Defs>
     <BiomeDef>
-        <defName>RimRound_CandyBiome</defName>
-        <label>candy forest</label>
-        <description>text.todo</description>
+        <defName>RimRound_CandyForest</defName>
+        <label>candy land</label>
+        <description>The vegetation here is contaminated by the remnants of a gluttonous artefact.\nYou won't go hungry here, but your sugar will spike.</description>
         <workerClass>RimRound.Biomes.BiomeWorker_CandyForest</workerClass>
         <animalDensity>3.7</animalDensity> <!-- Temperate Forest Default -->
-        <plantDensity>0.65</plantDensity> <!-- Temerate Forest Default -->
+        <plantDensity>0.2</plantDensity> <!-- Temerate Forest Default -->
         <settlementSelectionWeight>1</settlementSelectionWeight> <!-- Temerate Forest Default -->
         <movementDifficulty>1</movementDifficulty> <!-- Temerate Forest Default -->
         <texture>World/Biomes/CandyForest</texture>
         <forageability>1</forageability> <!-- Temerate Forest Default -->
-        <foragedFood>RawBerries</foragedFood> <!-- Temerate Forest Default -->
+        <foragedFood>RimRound_CandyBerries</foragedFood>
         <wildPlantRegrowDays>20</wildPlantRegrowDays> <!-- Temerate Forest Default -->
         <soundsAmbient>
             <li>Ambient_NightInsects_Standard</li>
@@ -57,14 +57,7 @@
         </diseases>
         <terrainsByFertility>
             <li>
-                <terrain>RimRond_CandySoil</terrain>
-                <min>-999</min>
-                <max>0.87</max>
-            </li>
-            <li>
-                <terrain>SoilRich</terrain>
-                <min>0.87</min>
-                <max>999</max>
+                <terrain>RimRound_CandySoil</terrain>
             </li>
         </terrainsByFertility>
         <terrainPatchMakers>
@@ -72,13 +65,7 @@
                 <perlinFrequency>0.015</perlinFrequency>
                 <thresholds>
                     <li>
-                        <terrain>SoilRich</terrain>
-                        <min>0.73</min>
-                        <max>0.80</max>
-                    </li>
-                    <li>
-                        <terrain>Mud</terrain>
-                        <min>0.80</min>
+                        <terrain>RimRound_CandySoil</terrain>
                         <max>0.93</max>
                     </li>
                     <li>
@@ -87,9 +74,8 @@
                         <max>1.06</max>
                     </li>
                     <li>
-                        <terrain>WaterDeep</terrain>
+                        <terrain>RimRound_ChocolateWater</terrain>
                         <min>1.06</min>
-                        <max>999</max>
                     </li>
                 </thresholds>
             </li>
@@ -101,8 +87,8 @@
             <DryThunderstorm>1</DryThunderstorm>
             <RainyThunderstorm>1</RainyThunderstorm>
             <FoggyRain>1</FoggyRain>
-            <SnowGentle>4</SnowGentle>
-            <SnowHard>4</SnowHard>
+            <SnowGentle>0</SnowGentle>
+            <SnowHard>0</SnowHard>
         </baseWeatherCommonalities>
         <wildPlants>
             <!-- <Plant_Grass>5.0</Plant_Grass>
@@ -118,9 +104,11 @@
             <Plant_HealrootWild>0.05</Plant_HealrootWild>
             <Plant_Witchwood MayRequire="Ludeon.RimWorld.Biotech">0.5</Plant_Witchwood> -->
 
-            <RimRound_Plant_CandyGrass>2.5</RimRound_Plant_CandyGrass>
-            <RimRound_Plant_IceCreamGrass>2.5</RimRound_Plant_IceCreamGrass>
-            <RimRound_Plant_TreeCandy>0.5</RimRound_Plant_TreeCandy>
+            <RimRound_CandyGrass>1</RimRound_CandyGrass>
+            <RimRound_IceCreamGrass>1</RimRound_IceCreamGrass>
+            <RimRound_CandyBush>0.5</RimRound_CandyBush>
+            <RimRound_IceCreamBush>0.1</RimRound_IceCreamBush>
+            <RimRound_CandyTree>0.2</RimRound_CandyTree>
         </wildPlants>
         <wildAnimals>
             <!-- <Donkey>0.20</Donkey>
@@ -164,5 +152,27 @@
             <li>Muffalo</li>
             <li>Alpaca</li>
         </allowedPackAnimals>
+        <modExtensions>
+            <li Class="RimRound.Biomes.CustomBiomeExtension">
+                <DefaultTerrain>RimRound_CandySoil</DefaultTerrain>
+                <UseCavesTerrain>false</UseCavesTerrain>
+                <NaturalRocks>
+                    <li>RimRound_RockCandy</li>
+                </NaturalRocks>
+                <RocksScatterType>Rocky_Candy</RocksScatterType>
+                <Geyser>RimRound_ChocoSteamGeyser</Geyser>
+            </li>
+        </modExtensions>
     </BiomeDef>
+    
+    <FeatureDef>
+        <defName>RimRound_CandyForest</defName>
+        <workerClass>FeatureWorker_Biome</workerClass>
+        <order>420</order>
+        <rootBiomes>
+            <li>RimRound_CandyForest</li>
+        </rootBiomes>
+        <nameMaker>NamerForest</nameMaker>
+    </FeatureDef>
+    
 </Defs>

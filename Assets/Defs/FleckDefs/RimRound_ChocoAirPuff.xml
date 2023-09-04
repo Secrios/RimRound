@@ -1,0 +1,15 @@
+﻿<Defs>
+    
+    <FleckDef ParentName="FleckBase_Thrown">
+        <defName>RimRound_ChocoAirPuff</defName>
+        <graphicData>
+            <texPath>Things/Building/Natural/RimRound_ChocoGeyser/Steam</texPath>
+            <renderInstanced>true</renderInstanced>
+        </graphicData>
+        <altitudeLayer>MoteOverhead</altitudeLayer>
+        <fadeInTime>0.04</fadeInTime>
+        <solidTime>0.03</solidTime>
+        <fadeOutTime>1</fadeOutTime>
+    </FleckDef>
+    
+</Defs>

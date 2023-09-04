@@ -1,0 +1,32 @@
+﻿<Defs>
+    
+    <ThingDef ParentName="StoneBlocksBase">
+        <defName>RimRound_RockCandyMaterial</defName>
+        <label>rock candy</label>
+        <description>This candy is too hard to eat, but might be a good building material.</description>
+        <graphicData>
+            <color>(255,105,180)</color>
+            <colorTwo>(255,255,255)</colorTwo>
+        </graphicData>
+        <statBases>
+            <Mass>1</Mass>
+            <SharpDamageMultiplier>0.5</SharpDamageMultiplier>
+        </statBases>
+        <stuffProps>
+            <color>(255,105,180)</color>
+            <commonality>0.0</commonality>
+            <soundImpactStuff>BulletImpact_Ground</soundImpactStuff>
+            <soundMeleeHitSharp>MeleeHit_Stone</soundMeleeHitSharp>
+            <soundMeleeHitBlunt>MeleeHit_Stone</soundMeleeHitBlunt>
+            <stuffAdjective>candy</stuffAdjective>
+            <statFactors>
+                <Beauty>1.2</Beauty>
+                <MaxHitPoints>1.4</MaxHitPoints>
+                <WorkToBuild>5.0</WorkToBuild>
+                <WorkToMake>1.1</WorkToMake>
+            </statFactors>
+            <canSuggestUseDefaultStuff>true</canSuggestUseDefaultStuff>
+        </stuffProps>
+    </ThingDef>
+    
+</Defs>

@@ -1,0 +1,35 @@
+﻿<Defs>
+
+    <ThingDef ParentName="BuildingNaturalBase">
+        <defName>RimRound_ChocoSteamGeyser</defName>
+        <label>choco steam geyser</label>
+        <description>A natural source of high-pressure choco steam.\nGeothermal generators can harness the steam power.\nRooms built over this will rapidly cook.</description>
+        <thingClass>RimRound.Things.ChocoSteamGeyser</thingClass>
+        <graphicData>
+            <texPath>Things/Building/Natural/RimRound_ChocoGeyser/Geyser</texPath>
+            <graphicClass>Graphic_Single</graphicClass>
+            <shaderType>Transparent</shaderType>
+            <drawSize>(4,4)</drawSize>
+        </graphicData>
+        <uiIconScale>0.5</uiIconScale>
+        <altitudeLayer>Floor</altitudeLayer>
+        <rotatable>false</rotatable>
+        <destroyable>false</destroyable>
+        <useHitPoints>false</useHitPoints>
+        <tickerType>Normal</tickerType>
+        <selectable>true</selectable>
+        <size>(2,2)</size>
+        <neverOverlapFloors>true</neverOverlapFloors>
+        <blockPlants>true</blockPlants>
+        <building>
+            <isEdifice>false</isEdifice>
+            <claimable>false</claimable>
+            <deconstructible>false</deconstructible>
+            <relatedBuildCommands>
+                <li>GeothermalGenerator</li>
+            </relatedBuildCommands>
+            <alwaysShowRelatedBuildCommands>true</alwaysShowRelatedBuildCommands>
+        </building>
+    </ThingDef>
+
+</Defs>

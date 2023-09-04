@@ -1,0 +1,23 @@
+﻿<Defs>
+    
+    <ThingDef ParentName="RockBase">
+        <defName>RimRound_RockCandy</defName>
+        <label>rock candy</label>
+        <description>Rock formation made of candy.</description>
+        <graphicData>
+            <color>(255,105,180)</color>
+        </graphicData>
+        <statBases>
+            <MaxHitPoints>4000</MaxHitPoints>
+        </statBases>
+        <filthLeaving>RimRound_Filth_RubbleRockCandy</filthLeaving>
+        <building>
+            <isNaturalRock>true</isNaturalRock>
+            <mineableThing>RimRound_RockCandyMaterial</mineableThing>
+            <mineableYield>4</mineableYield>
+            <mineableYieldWasteable>false</mineableYieldWasteable>
+            <mineableDropChance>0.25</mineableDropChance>
+        </building>
+    </ThingDef>
+    
+</Defs>

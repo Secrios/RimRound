@@ -1,0 +1,16 @@
+﻿<Defs>
+    
+    <ThingDef ParentName="BaseFilth">
+        <defName>RimRound_Filth_RubbleRockCandy</defName>
+        <label>rock rubble</label>
+        <graphicData>
+            <texPath>Things/Filth/RubbleRock</texPath>
+            <color>(255,105,180)</color>
+        </graphicData>
+        <filth>
+            <disappearsInDays>45~50</disappearsInDays>
+            <cleaningWorkToReduceThickness>35</cleaningWorkToReduceThickness>
+        </filth>
+    </ThingDef>
+    
+</Defs>
